@@ -1,0 +1,156 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#trainstats{
+	width: 20%;
+	float: left;
+	padding: 3px;
+}
+
+#secpart{
+	width: 50%;
+	float: left;
+	padding: 5px;
+	text-align: center;
+	border-left: 1px solid #3276b1;
+}
+
+#controls{
+	width: 100%;
+	margin: auto;
+}
+.layer {
+  border: 1px solid #999;
+  margin-bottom: 5px;
+  text-align: left;
+  padding: 10px;
+  width: 100%;
+  background-color: #faebcc;
+}
+.layer_act {
+  width: 450px;
+  padding-left:  5px;
+  float: right;
+  width: 50%;
+}
+.ltconv {
+  background-color: #bfe8bf;
+}
+.ltrelu {
+  background-color: #ebccd1;
+}
+.ltpool {
+  background-color: #abdce6;
+}
+.ltsoftmax {
+  background-color: #f0ad4e;
+}
+.ltfc {
+  background-color: #9190ec;
+}
+.ltlrn {
+  background-color: #DFD; 
+}
+.ltdropout {
+  background-color: #AAA;  
+}
+.ltitle {
+  color: #333;
+  font-size: 18px;
+}
+.actmap {
+  margin: 1px;
+}
+#trainstats {
+  text-align: left;
+}
+.clear {
+  clear: both;
+}
+#wrap {
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.secpart {
+  width: 400px;
+  float: left;
+}
+.testdiv {
+  background-color: rgba(255,255,255,0.65);
+  height: auto;
+  width: 100%;
+  display: inline-block;
+  font-size: 12px;
+  box-shadow: 0px 0px 2px 2px #EEE;
+  margin: 5px;
+  padding: 5px;
+  color: black;
+}
+.testdiv canvas {
+  float: left;
+  width: 64px;
+}
+.probsdiv {
+  width: 250px;
+  font-size: 12px;
+  box-shadow: 0px 0px 2px 2px #EEE;
+  margin: 0 auto;
+  padding: 5px;
+  overflow: auto;
+  position: relative;
+}
+.probsdiv canvas {
+  float: left;
+  margin:auto;
+  left:0;
+  right:0;
+  bottom:0;
+}
+
+.probsdiv-test-one{
+    font-size: 12px;
+    margin: auto;
+    padding: 10px;
+    width: 100%;
+}
+.pp {
+  margin: 1px;
+  padding: 1px;
+}
+.imageTest{
+  float: left;
+}
+
+#testset_vis {
+  margin-bottom: 200px;
+}
+/* Choose Image control*/
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+#img-upload{
+    width: 100%;
+}
+/*Process bar loading*/

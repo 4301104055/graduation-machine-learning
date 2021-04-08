@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>CNN For X-Ray Images</title>
+		<meta charset="UTF-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--Style CSS-->
+		<!-- Bootstrap Core CSS -->
+	   		<link href="../css/bootstrap.min.css" rel="stylesheet">
+	    	<!-- MetisMenu CSS -->
+	   		<link href="../css/metisMenu.min.css" rel="stylesheet">
+			 <!-- Custom Fonts -->
+	    	<link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+			<link rel="stylesheet" type="text/css" href="../css/bootstrap-toggle.min.css"/>
+			<!-- Custom CSS -->
+	    	<link href="../css/startmin.css" rel="stylesheet">
+			<link rel="stylesheet" href="../css/styles.css" />
+			<style type="text/css">
+				.bg-danger {
+		    		background-color: #dc3545!important;
+				}
+				.bg-success {
+				    background-color: #28a745!important;
+				}
+				.img-preview{
+					display: none;
+				}
+				.img-preview-show{
+					vertical-align: middle;
+					width: auto;
+					height: 1128px;
+					border:0px;
+				}
+				#testset_acc{
+				  	font-size: 13px;
+				  	font-weight: bold;
+				}
+				#testset_vis {
+				  	margin-bottom: 0px;
+				}
+			</style>
+	    
+	<!-- Script -->
+		<!--JQuery-->
+		<script src="../js/jquery-1.11.1.min.js"></script>
+		<script src="../js/jquery-ui-1.11.1.min.js"></script>
+		<script src="../js/bootstrap-waitingfor.js"></script>
+		<script src="../js/bootstrap-waitingfor.min.js"></script>
+		<!--<script src="../js/bootstrap-toggle.min.js"></script>-->
+	    <script src="../js/bootstrap.min.js"></script>
+	    <!-- Metis Menu Plugin JavaScript -->
+		<script src="../js/metisMenu.min.js"></script>
+		<!-- Custom Theme JavaScript -->
+		<script src="../js/startmin.js"></script>
+	    <!-- Lib for convnetjs -->
+		<script src="../lib/vis.js"></script>
+		<script src="../lib/util.js"></script>
+		<script src="../lib/convnet.js"></script>
+	    <!-- Lib for images pre-processing -->
+		<script src="../js/single-image-helpers.js"></script>
+		<script src="../js/pica.js"></script>
+		<!--lib for progress bar loading network-->
+		<script src="../js/progress-bar-lib.js"></script>
+
+	<!--Implement convolution neural network code-->
+		<script type="text/javascript">
+			classes_txt = ['CORNER','FAULT','GOAL'];
+			var dataset_name='';
+			var image_dimension = 64;
+			var image_dimension_w = 64;
+			var image_dimension_h = 64
+			var image_channels = 3;
+			var file_url_net='';
+			var file_url_info='';
+		</script>
+		<script src="../js/single-images-demo.js"></script>
+	</head>
+	<body>
+	<!-- Body content -->
+		<div id = "wrapper"><!--Start div wrapper-->
+			<div id="myProgress">
+	  			<div id="myBar"></div>
+			</div>
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		      <div class="modal-dialog">
+		        <div class="modal-content">
+		          <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
+		            <h4 class="modal-title" id="myModalLabel">Choosing a network pre-trained for testing</h4>
+		          </div>
+		          <div class="modal-body">
+		            <label style="margin-left: 10px;" class="radio-inline">
+		              <input type="radio" name="inlineRadioOptions" id="128" value="option-128"> CNN-128L Pre-trained network
+		            </label>
+		            <label class="radio-inline">
+		              <input type="radio" name="inlineRadioOptions" id="64L" value="option-64L"> CNN-64L Pre-trained network
+		            </label>
+		            <label class="radio-inline">
+		              <input type="radio" name="inlineRadioOptions" id="64R" value="option-32L"> CNN-64R Pre-trained network
+		            </label>
+		          </div>
+		          <div class="modal-footer">
+		            <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		            <button id="btnSave" type="button" class="btn btn-primary">Ok</button>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+<!-- Navigation top menu -->
+			<div class="row"><!--Start div row contain nav-->
+				<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			        <div class="navbar-header" style="display: inline; width: 120px">
+			            <a style="color: #FFFFFF;" class="navbar-brand" href="../index.html"><img style=" display: inline-block; width: 32px; height: 32px; padding-right: 5px; padding-bottom: 5px;" src="../images/CNN-Network-Icon-White.png"/>CNN</a>
+			        </div>
+			<!-- Top Navigation: Left Menu -->
+			        <ul class="nav navbar-nav navbar-left navbar-top-links">
+				        <li class="dropdown navbar-inverse">
+				            <li><a href="../index.html"><i class="fa fa-home fa-fw"></i>Home</a></li>
+				            <li class="dropdown">
+				                <a class="dropdown-toggle" data-toggle="dropdown">
+				                    <i class="fa fa-codepen fa-fw"></i> Training CNN <b class="caret"></b>
+				                </a>
+				                <ul class="dropdown-menu dropdown-user">
+				                	<li>
+				                		<a href="cnn-128.html"><i class="fa fa-hand-o-right fa-fw"></i> Training CNN-128F</a>
+				                    </li>
+				                    <li class="divider"></li>
+				                    <li>
+				                		<a href="cnn-64L.html"><i class="fa fa-hand-o-right fa-fw"></i> Training CNN-64L</a>
+				                    </li>
+				                   	<li class="divider"></li>
+				                    <li>
+				                		<a href="cnn-64R.html"><i class="fa fa-hand-o-right fa-fw"></i> Training CNN-64R</a>
+				                    </li>
+				                    <li class="divider"></li>
+				                    <li>
+				                		<a href="cnn-64R.html"><i class="fa fa-hand-o-right fa-fw"></i> Training CNN with chest x-rays image 64x64</a>
+				                    </li>
+				                </ul>
+			            	</li>
+			            	<li class="dropdown">
+				                <a class="dropdown-toggle" data-toggle="dropdown">
+				                    <i class="fa fa-stethoscope fa-fw"></i> Testing with chest X-Ray image <b class="caret"></b>
+				                </a>
+				                <ul class="dropdown-menu dropdown-user">
+				                	<li>
+				                		<a href="test-one-image.html"><i class="glyphicon glyphicon-picture"></i> Testing with one image</a>
+				                    </li>
+				                    <li class="divider"></li>
+				                    <li>
+				                		<a href="multi-cnn-model.html"><i class="glyphicon glyphicon-picture"></i>Multi-CNNs Model Testing</a>
+				                    </li>
+				                </ul>
+			            	</li>
+			            	<li class="dropdown">
+				                <a href="#" class="dropdown-toggle"><i class="glyphicon glyphicon-book fa-fw"></i> My Publications</a>
+			            	</li>
+				        </li>
+			        </ul>
+			<!-- Top Navigation: Right Menu -->
+			        <ul class="nav navbar-right navbar-top-links">
+			            <li class="dropdown">
+			                <a class="dropdown-toggle" href="about-group.html"><i class="fa fa-user fa-fw"></i> About</a>
+			            </li>
+			            <li class="dropdown">
+			                <a class="dropdown-toggle" href="#"><i class="fa fa-user fa-fw"></i>Guide</a>
+			            </li>
+			        </ul>
+	    		</nav>				
+			</div><!--End div row contain nav-->
+		<!--Page Content-->
+			<div class="page-wrapper"><!--Start div page-wrrapper-->
+				<div class="container-fluid"><!--Start div container-fluid-->
+					<div class="row" style="padding-top: 20px;" >
+						<div class="col-md-12">
+	                    	<h2 class="page-header">CNN - TESTING SINGLE IMAGE FROM COMPUTER</h2>
+	                	</div>
+	            	</div>
+	            	<div class="row"><!--Start div row contain chooser image control-->
+	            		<div class="col-md-6">
+				    		<div class="form-group">
+					    		<label><h4>Choose image from computer: </h4></label>
+					    		<div class="input-group">
+			           				<span class="input-group-btn">
+				                		<span class="btn btn-default btn-file">
+				                    	Browse… <input type="file" id="imgInp" accept="image/png, image/jpeg">
+				                		</span>
+			            			</span>
+			            			<input type="text" class="form-control" readonly>
+			        			</div>		
+		        			</div>
+		    			</div>
+		  				<div class="col-md-6">
+		  					<form class="form-group">
+			  					<label><h4>Select image from list:</h4></label>
+			  					<select id="images_list" title="Choose a image for testing" class="form-control" onchange="getimage();">
+			  						<option>Select...</option>
+			  						<option value="../imgs-for-testing/128x128/abnormal_test_1_full.jpg">Abnormal-Image-1</option>
+			  						<option value="../imgs-for-testing/128x128/abnormal_test_2_full.jpg">Abnormal-Image-2</option>
+			  						<option value="../imgs-for-testing/128x128/abnormal_test_3_full.jpg">Abnormal-Image-3</option>
+			  						<option value="../imgs-for-testing/128x128/abnormal_test_9_full.jpg">Abnormal-Image-4</option>
+			  						<option value="../imgs-for-testing/128x128/abnormal_test_13_full.jpg">Abnormal-Image-5</option>
+			  						<option value="../imgs-for-testing/128x128/abnormal-test-02.jpg">Abnormal-Image-6</option>
+			  						<option value="../imgs-for-testing/128x128/abnormal-test-03.jpg">Abnormal-Image-7</option>
+			  						<option value="../imgs-for-testing/128x128/abnormal-test-04.jpg">Abnormal-Image-8</option>
+			  						<option value="../imgs-for-testing/128x128/normal-test-01.jpg">Normal-Image-1</option>
+			  						<option value="../imgs-for-testing/128x128/normal-test-02.jpg">Normal-Image-2</option>
+			  						<option value="../imgs-for-testing/128x128/normal-test-03.jpg">Normal-Image-3</option>
+			  						<option value="../imgs-for-testing/128x128/normal-test-04.jpg">Normal-Image-4</option>
+			  						<option value="../imgs-for-testing/128x128/normal-test-05.jpg">Normal-Image-5</option>
+			  						<option value="../imgs-for-testing/128x128/normal_test_56_full.jpg">Normal-Image-6</option>
+			  						<option value="../imgs-for-testing/128x128/normal_test_75_full.jpg">Normal-Image-7</option>
+			  						<option value="../imgs-for-testing/128x128/normal_test_76_full.jpg">Normal-Image-8</option>
+								</select>
+							</form>
+		  				</div>
+	            	</div><!--End div row contain chooser image control-->
+	            	<div class="row"><!--Start div row contain network information and image previewer-->
+	            		<hr style="border-bottom: 1px solid #3276b1; width: 100%">
+	            		<div class="col-md-4">
+							<div class="form-group">
+								<h4>Pre - trained Network information: </h4>
+								<h5 id = "max-acc-train">Max accuracy test on testset:</h5>
+								<h5 id = "training-acc">Training accuracy:</h5>
+								<h5 id = "validation-acc-train">validation accuracy in training: </h5>
+								<h5 id = "classify-loss">Classification loss: </h5>
+								<h5 id = "wloss-train">L2 Weight decay loss: </h5>
+								<h5 id = "exam-seen">Examples seen: </h5>
+								<h5 id = "forward-time">Forward time per example: </h5>
+								<h5 id = "backprop-time">Backprop time per example: </h5>
+								<h5 id = "start-training-time">Start training time: </h5>
+								<h5 id = "end-training-time">End training time: </h5>
+								<!--<input type="submit" value="Read Text" class="btn btn-primary btn-small btn-inline" onclick="load_network_pretrained_information();">-->
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div id = "div-image" style="text-align: center;">
+								<label><h4>Image preview: </h4></label> <br>
+								<span id = "span_image">
+									
+								</span>
+								<span style="width: 100%; text-align: center;">
+									<img class="img-preview-show" id='preview_img_show' />
+								</span><br><br>
+								<input type="submit" value="classify image" class="btn btn-primary btn-small btn-inline" onclick="testImage(document.getElementById('preview_img'))">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<span style="text-align: center;"">
+								<h4>Result: </h4>
+								<div id="testset_acc"></div>
+							</span>
+							<div id="testset_vis"></div>
+						</div>
+	                </div><!--End div row contain network information and image previewer-->
+	            	<div class="row">
+	            		<hr style="border-bottom: 1px solid #3276b1; width: 100%">
+						<div class="col-md-12">
+							<h3 style="margin: 0px 0px 3px 0px; text-align: center;">Network Visualization</h3>
+							<div class="divsec">
+								<div id="visnet"></div>
+							</div>
+						</div>
+					</div>
+				</div><!--End div container-fluid-->
+			</div><!--End div page-wrrapper-->
+		</div><!--End div wrapper-->
+	</body>
+</html>
