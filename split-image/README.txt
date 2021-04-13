@@ -1,0 +1,1 @@
+command to run: node extract-video-to-image.js

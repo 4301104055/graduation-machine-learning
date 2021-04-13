@@ -1,0 +1,1 @@
+ffmpeg -i as.mp4 aa%04d.png -hide_banner
