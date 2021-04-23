@@ -123,7 +123,7 @@ var load_data_batch = function(batch_num) {
     data_canvas.height = data_img_elt.height;
     console.log(data_canvas.width + "---" + data_canvas.height);
     var data_ctx = data_canvas.getContext("2d");
-    data_ctx.drawImage(data_img_elt, 0, 0); // copy it over... bit wasteful :(
+    data_ctx.drawImage(data_img_elt, 0, 0); // copy it over... bit wasteful
     img_data[batch_num] = data_ctx.getImageData(0, 0, data_img_elt.width, data_img_elt.height);
     loaded[batch_num] = true;
     if(batch_num < test_batch) { loaded_train_batches.push(batch_num); }
@@ -795,4 +795,6 @@ var Save_Image_From_Canvas = function(canvasID, imageName){
 var change_net = function() {
   eval($("#newnet").val());
   reset_all();
+  alert("You have been change network!")
+  
 }

@@ -39,6 +39,7 @@
 				#testset_vis {
 				  	margin-bottom: 0px;
 				}
+				
 			</style>
 	    
 	<!-- Script -->
@@ -75,10 +76,17 @@
 			var file_url_info='';
 		</script>
 		<script src="../js/single-images-demo.js"></script>
+		
 	</head>
 	<body>
-	<!-- Body content -->
-		<div id = "wrapper"><!--Start div wrapper-->
+		<script>
+			function UploadSuccess() {
+				alert("Upload video successful!")
+				console.log('Cut frames successful')
+				//window.location = 'http://localhost:8080/cnn';
+			}
+		</script>
+	<!-- Body content --->
 			<div id="myProgress">
 	  			<div id="myBar"></div>
 			</div>
@@ -87,7 +95,7 @@
 		        <div class="modal-content">
 		          <div class="modal-header">
 		            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
-		            <h4 class="modal-title" id="myModalLabel">Choosing a network pre-trained for testing</h4>
+		            <h4 class="	modal-title" id="myModalLabel">Choosing a network pre-trained for testing</h4>
 		          </div>
 		          <div class="modal-body">
 		            <label style="margin-left: 10px;" class="radio-inline">
@@ -106,7 +114,7 @@
 		          </div>
 		        </div>
 		      </div>
-		    </div>
+		    </div> 
 <!-- Navigation top menu -->
 			<div class="row"><!--Start div row contain nav-->
 				<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -153,9 +161,9 @@
 				                    </li>
 				                </ul>
 			            	</li>
-			            	<li class="dropdown">
+			            	<!-- <li class="dropdown">
 				                <a href="#" class="dropdown-toggle"><i class="glyphicon glyphicon-book fa-fw"></i> My Publications</a>
-			            	</li>
+			            	</li> -->
 				        </li>
 			        </ul>
 			<!-- Top Navigation: Right Menu -->
@@ -180,18 +188,45 @@
 	            	<div class="row"><!--Start div row contain chooser image control-->
 	            		<div class="col-md-6">
 				    		<div class="form-group">
-					    		<label><h4>Choose image from computer: </h4></label>
-					    		<div class="input-group">
-			           				<span class="input-group-btn">
-				                		<span class="btn btn-default btn-file">
-				                    	Browse… <input type="file" id="imgInp" accept="image/png, image/jpeg">
-				                		</span>
-			            			</span>
-			            			<input type="text" class="form-control" readonly>
-			        			</div>		
+					    		<label><h4>Choose video from computer: </h4></label>
+								<form action="http://localhost:3000" method="POST" enctype="multipart/form-data" >
+									<div class="input-group">
+										<span class="input-group-btn">
+											<span class="btn btn-default btn-file"> Choose file 
+												<input type="file" id="videoInp" accept="video/*, video/mkv" name="file">
+										 	</span>
+									 	</span>
+									 <input type="text" class="form-control" onchange="myFunction()"readonly>
+									 </div>
+									<span>
+										<h4>Frames/s:</h4><input type="number" min="1" max="25" name="fps" value="1" class="col-md-6">
+										<button type="submit" class="col-md-3" value="Cut Frames" onclick="UploadSuccess()">Cut Frames</button>
+									</span>
+								 </div>	
+								</form>	
 		        			</div>
 		    			</div>
-		  				<div class="col-md-6">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label><h4>Choose image from computer: </h4></label>
+								<div class="input-group">
+									<span class="input-group-btn">
+										<span class="btn btn-default btn-file">Browse
+											<input type="file" id="imgInp" accept="image/*" onchange="myFunction()">
+										</span>
+									</span>
+									<input type="text" class="form-control" readonly>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-md-6">
+							<form action="" class="form-group">
+								<button type="button" onclick="" class="btn btn-primary btn-small btn-inline col-sm-3 col-md-6" onClick="">Submit</button>
+								</div>								
+							
+							</form>
+						</div> -->
+		  				<!-- <div class="col-md-6">
 		  					<form class="form-group">
 			  					<label><h4>Select image from list:</h4></label>
 			  					<select id="images_list" title="Choose a image for testing" class="form-control" onchange="getimage();">
@@ -214,7 +249,7 @@
 			  						<option value="../imgs-for-testing/128x128/normal_test_76_full.jpg">Normal-Image-8</option>
 								</select>
 							</form>
-		  				</div>
+		  				</div> -->
 	            	</div><!--End div row contain chooser image control-->
 	            	<div class="row"><!--Start div row contain network information and image previewer-->
 	            		<hr style="border-bottom: 1px solid #3276b1; width: 100%">
@@ -229,8 +264,8 @@
 								<h5 id = "exam-seen">Examples seen: </h5>
 								<h5 id = "forward-time">Forward time per example: </h5>
 								<h5 id = "backprop-time">Backprop time per example: </h5>
-								<h5 id = "start-training-time">Start training time: </h5>
-								<h5 id = "end-training-time">End training time: </h5>
+								<!-- <h5 id = "start-training-time">Start training time: </h5>
+								<h5 id = "end-training-time">End training time: </h5> -->
 								<!--<input type="submit" value="Read Text" class="btn btn-primary btn-small btn-inline" onclick="load_network_pretrained_information();">-->
 							</div>
 						</div>
@@ -238,7 +273,6 @@
 							<div id = "div-image" style="text-align: center;">
 								<label><h4>Image preview: </h4></label> <br>
 								<span id = "span_image">
-									
 								</span>
 								<span style="width: 100%; text-align: center;">
 									<img class="img-preview-show" id='preview_img_show' />
@@ -247,7 +281,7 @@
 							</div>
 						</div>
 						<div class="col-md-4">
-							<span style="text-align: center;"">
+							<span style="text-align: center;">
 								<h4>Result: </h4>
 								<div id="testset_acc"></div>
 							</span>
