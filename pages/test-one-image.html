@@ -149,7 +149,7 @@
 			            	</li>
 			            	<li class="dropdown">
 				                <a class="dropdown-toggle" data-toggle="dropdown">
-				                    <i class="fa fa-stethoscope fa-fw"></i> Testing with chest X-Ray image <b class="caret"></b>
+				                    <i class="fa fa-stethoscope fa-fw"></i> Testing with one image <b class="caret"></b>
 				                </a>
 				                <ul class="dropdown-menu dropdown-user">
 				                	<li>
@@ -167,14 +167,14 @@
 				        </li>
 			        </ul>
 			<!-- Top Navigation: Right Menu -->
-			        <ul class="nav navbar-right navbar-top-links">
+			        <!-- <ul class="nav navbar-right navbar-top-links">
 			            <li class="dropdown">
 			                <a class="dropdown-toggle" href="about-group.html"><i class="fa fa-user fa-fw"></i> About</a>
 			            </li>
 			            <li class="dropdown">
 			                <a class="dropdown-toggle" href="#"><i class="fa fa-user fa-fw"></i>Guide</a>
 			            </li>
-			        </ul>
+			        </ul> -->
 	    		</nav>				
 			</div><!--End div row contain nav-->
 		<!--Page Content-->
@@ -192,20 +192,30 @@
 								<form action="http://localhost:3000" method="POST" enctype="multipart/form-data" >
 									<div class="input-group">
 										<span class="input-group-btn">
-											<span class="btn btn-default btn-file"> Choose file 
-												<input type="file" id="videoInp" accept="video/*, video/mkv" name="file">
+											<span class="btn btn-default btn-file">Browser 
+												<input class="upload-video-file" type="file" id="videoInp" accept="video/*, video/mkv" name="file">
 										 	</span>
 									 	</span>
-									 <input type="text" class="form-control" onchange="myFunction()"readonly>
-									 </div>
+										 <input type="text" class="form-control file" onchange="myFunction()" readonly>
+									</div>
+									
 									<span>
-										<h4>Frames/s:</h4><input type="number" min="1" max="25" name="fps" value="1" class="col-md-6">
-										<button type="submit" class="col-md-3" value="Cut Frames" onclick="UploadSuccess()">Cut Frames</button>
+										<h4>Frames/s:</h4><input type="number" min="1" max="25" name="fps" class="col-md-6" placeholder="Nhập số frames/s bạn muốn cắt">
+										<button type="submit" class="col-md-3" value="Cut Frames">Cut Frames</button>
 									</span>
-								 </div>	
 								</form>	
 		        			</div>
 		    			</div>
+						<div class="col-md-3">
+							<div style="display: none;" class='video-prev' class="pull-right">
+								<video height="200" width="300" class="video-preview"controls="controls" autoplay></video>
+							</div>
+						</div>
+					</div>
+					<!-- //div for video's preview -->
+						<!-- <div style="display: none;" class='video-prev' class="pull-right">
+							<video height="200" width="300" class="video-preview" controls="controls"/>
+						</div> -->
 						<div class="col-md-6">
 							<div class="form-group">
 								<label><h4>Choose image from computer: </h4></label>
