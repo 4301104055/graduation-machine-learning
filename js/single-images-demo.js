@@ -1,11 +1,11 @@
 // int main
 $(window).load(function() {
-    $('#myModal').modal('show');
-    var cbk128 = document.getElementById('128');
-    var cbk64L = document.getElementById('64L');
-    var cbk64R = document.getElementById('64R');
-    $('#btnSave').click(function(){
-        if(cbk128.checked == true){
+    // $('#myModal').modal('show');
+    // var cbk128 = document.getElementById('128');
+    // var cbk64L = document.getElementById('64L');
+    // var cbk64R = document.getElementById('64R');
+    // $('#btnSave').click(function(){
+        // if(cbk128.checked == true){
           dataset_name = "x-rays_128";
           image_dimension = 128;
           image_dimension_w = 128;
@@ -17,35 +17,35 @@ $(window).load(function() {
           load_network_pretrained(file_url_net);
           load_network_pretrained_information(file_url_info),
           setTimeout(function () {waitingDialog.hide();}, 3000)
-        }
-        if(cbk64L.checked == true){
-          dataset_name = "x-rays_64_left";
-          image_dimension_w = 64;
-          image_dimension_h = 128;
-          file_url_net = "../"+dataset_name+"/"+ dataset_name +"_CNN-64L_network.json";
-          file_url_info = "../"+dataset_name+"/"+ dataset_name +"_CNN-64L_Information.txt";
-          $('#myModal').modal('hide');
-          waitingDialog.show("Loading pretrained network - CNN-64L");
-          load_network_pretrained(file_url_net);
-          load_network_pretrained_information(file_url_info),
-          setTimeout(function () {waitingDialog.hide();}, 3000)
-        }
-        if(cbk64R.checked == true){
-          dataset_name = "x-rays_64_right";
-          image_dimension_w = 64;
-          image_dimension_h = 128;
-          file_url_net = "../"+dataset_name+"/"+ dataset_name +"_CNN-64R_network.json";
-          file_url_info = "../"+dataset_name+"/"+ dataset_name +"_CNN-64R_Information.txt";
-          $('#myModal').modal('hide');
-          waitingDialog.show("Loading pretrained network - CNN-64R");
-          load_network_pretrained(file_url_net);
-          load_network_pretrained_information(file_url_info),
-          setTimeout(function () {waitingDialog.hide();}, 3000)
-        }
-    });
-    $('#btnClose').click(function(){
-      window.location="../index.html";
-    });
+        // }
+        // if(cbk64L.checked == true){
+        //   dataset_name = "x-rays_64_left";
+        //   image_dimension_w = 64;
+        //   image_dimension_h = 128;
+        //   file_url_net = "../"+dataset_name+"/"+ dataset_name +"_CNN-64L_network.json";
+        //   file_url_info = "../"+dataset_name+"/"+ dataset_name +"_CNN-64L_Information.txt";
+        //   $('#myModal').modal('hide');
+        //   waitingDialog.show("Loading pretrained network - CNN-64L");
+        //   load_network_pretrained(file_url_net);
+        //   load_network_pretrained_information(file_url_info),
+        //   setTimeout(function () {waitingDialog.hide();}, 3000)
+        // }
+        // if(cbk64R.checked == true){
+        //   dataset_name = "x-rays_64_right";
+        //   image_dimension_w = 64;
+        //   image_dimension_h = 128;
+        //   file_url_net = "../"+dataset_name+"/"+ dataset_name +"_CNN-64R_network.json";
+        //   file_url_info = "../"+dataset_name+"/"+ dataset_name +"_CNN-64R_Information.txt";
+        //   $('#myModal').modal('hide');
+        //   waitingDialog.show("Loading pretrained network - CNN-64R");
+        //   load_network_pretrained(file_url_net);
+        //   load_network_pretrained_information(file_url_info),
+        //   setTimeout(function () {waitingDialog.hide();}, 3000)
+        // }
+    // });
+    // $('#btnClose').click(function(){
+    //   window.location="../index.html";
+    // });
 });
 
 var maxmin = cnnutil.maxmin;
@@ -402,4 +402,39 @@ var getimage = function(){
     rhino.attr("src", rhinoStorage);
     image_prview_show.attr("src", rhinoStorage)
   }
+}
+$(function() {
+  $('.upload-video-file').on('change', function(){
+    if (isVideo($(this).val())){
+      $('.video-preview').attr('src', URL.createObjectURL(this.files[0]));
+      $('.video-prev').show();
+    }
+    else
+    {
+      $('.upload-video-file').val('');
+      $('.video-prev').hide();
+      alert("Only video files are allowed to upload.")
+    }
+  });
+});
+
+// If user tries to upload videos other than these extension , it will throw error.
+function isVideo(filename) {
+  var ext = getExtension(filename);
+  switch (ext.toLowerCase()) {
+  case 'm4v':
+  case 'avi':
+  case 'mp4':
+  case 'mov':
+  case 'mpg':
+  case 'mpeg':
+  case 'mkv':
+      return true;
+  }
+  return false;
+}
+
+function getExtension(filename) {
+  var parts = filename.split('.');
+  return parts[parts.length - 1];
 }

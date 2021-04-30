@@ -16,16 +16,18 @@ $(window).load(function() {
           load_network_pretrained_information(file_url_info),
           setTimeout(function () {waitingDialog.hide();}, 3000)
         }
+        
         if(cbk64.checked == true){
-          dataset_name = "x-rays_64";
-          image_dimension = 64;
-          file_url_net = dataset_name+"/"+ dataset_name +"_netowrk_snapshot_90.json";
-          file_url_info = dataset_name+"/"+ dataset_name +"_Information_when_maxacc_90.txt";
-          $('#myModal').modal('hide');
-          waitingDialog.show("Loading pretrained network - " + dataset_name);
-          load_network_pretrained(file_url_net);
-          load_network_pretrained_information(file_url_info),
-          setTimeout(function () {waitingDialog.hide();}, 3000)
+          // dataset_name = "x-rays_64";
+          // image_dimension = 64;
+          // file_url_net = dataset_name+"/"+ dataset_name +"_netowrk_snapshot_90.json";
+          // file_url_info = dataset_name+"/"+ dataset_name +"_Information_when_maxacc_90.txt";
+          // $('#myModal').modal('hide');
+          // waitingDialog.show("Loading pretrained network - " + dataset_name);
+          // load_network_pretrained(file_url_net);
+          // load_network_pretrained_information(file_url_info),
+          // setTimeout(function () {waitingDialog.hide();}, 3000)
+          alert('No trained data, please choose another option');
         }
         if(cbk32.checked == true){
           //dataset_name = "x-rays_32";
@@ -426,4 +428,39 @@ var getimage = function(){
     rhino.attr("src", rhinoStorage);
     image_prview_show.attr("src", rhinoStorage)
   }
+}
+$(function() {
+  $('.upload-video-file').on('change', function(){
+    if (isVideo($(this).val())){
+      $('.video-preview').attr('src', URL.createObjectURL(this.files[0]));
+      $('.video-prev').show();
+    }
+    else
+    {
+      $('.upload-video-file').val('');
+      $('.video-prev').hide();
+      alert("Only video files are allowed to upload.")
+    }
+  });
+});
+
+// If user tries to upload videos other than these extension , it will throw error.
+function isVideo(filename) {
+  var ext = getExtension(filename);
+  switch (ext.toLowerCase()) {
+  case 'm4v':
+  case 'avi':
+  case 'mp4':
+  case 'mov':
+  case 'mpg':
+  case 'mpeg':
+  case 'mkv':
+      return true;
+  }
+  return false;
+}
+
+function getExtension(filename) {
+  var parts = filename.split('.');
+  return parts[parts.length - 1];
 }

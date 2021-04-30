@@ -110,6 +110,7 @@ $(document).ready( function() {
 
         $("#imgInp").change(function(){
             readURL(this);
+            
         });    
     });
 

@@ -442,6 +442,7 @@ $(function(){
       $("#testset-acc-incorrect").text('');
       $("#testset-acc-time").text('');
       $("#testset-vis-folder").empty();
+     
   });
 });
 

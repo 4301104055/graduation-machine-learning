@@ -107,10 +107,13 @@ $(document).ready( function() {
                 };  
                 sp.prepend(img_preview_hide);
                 reader.readAsDataURL(input.files[0]);
+                
             }
         }
         $("#imgInp").change(function(){
             readURL(this);
+            $("#BtnSubmit").removeClass("an");
+            $("#BtnSubmit").addClass("hien");
         });    
     });
 
